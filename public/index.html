@@ -23,6 +23,11 @@
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/app.css">
+
+  <!-- Captures Grace's key from the fragment and strips it from the URL. Must stay
+       ahead of the analytics snippet below, whose pageview beacon sends the path
+       and fragment. -->
+  <script src="js/key.js"></script>
 <script>
 (function(){var A='https://analytics.harrys.monster/e',v;
 try{v=localStorage.getItem('_aid')||crypto.randomUUID();localStorage.setItem('_aid',v)}catch(e){v='anon'}

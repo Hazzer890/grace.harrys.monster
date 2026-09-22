@@ -27,7 +27,8 @@ export function apply(state, op, now = Date.now()) {
   if (op?.op === "add") {
     const name = clean(op.name, LIMITS.name);
     if (!name) throw new Error("name required");
-    if (people.some((p) => p.name.toLowerCase() === name.toLowerCase())) throw new Error(`${name} is already on the board`);
+    const dup = people.find((p) => p.name.toLowerCase() === name.toLowerCase());
+    if (dup) throw new Error(`${dup.name} is already on the board`);
     if (people.length >= LIMITS.people) throw new Error("board is full");
     const to = op.to == null ? people.length + 1 : rank(op.to, people.length + 1);
     people.splice(to - 1, 0, { name, since: now });

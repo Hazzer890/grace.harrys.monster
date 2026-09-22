@@ -1,15 +1,9 @@
 const $ = (s) => document.querySelector(s);
 
-// Grace's key arrives once as a URL fragment (never sent to the server as a
-// URL), is kept in localStorage, and is stripped from the address bar.
+// Grace's key arrives once as a URL fragment and is stripped from the address
+// bar by js/key.js, which runs first so the analytics beacon never sees it.
 let key = null;
-try {
-  if (location.hash.length > 1) {
-    localStorage.setItem("key", location.hash.slice(1));
-    history.replaceState(null, "", location.pathname);
-  }
-  key = localStorage.getItem("key");
-} catch {}
+try { key = localStorage.getItem("key"); } catch {}
 const editing = Boolean(key);
 document.body.classList.toggle("editing", editing);
 $("#add-form").hidden = !editing;
