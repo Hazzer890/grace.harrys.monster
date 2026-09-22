@@ -4,8 +4,7 @@ import { apply, empty } from "./board.js";
 // One Board for the whole site (getByName("main")). The entire state is a
 // single JSON value in storage; every change is written whole and pushed to
 // every connected socket. Sockets use hibernation so idle tabs cost nothing.
-// ponytail: single value, 128 KB storage cap — at LIMITS that is ~70 KB. Split
-// people/log into two keys if the limits ever grow.
+// ponytail: whole board is one storage value (~70 KB at LIMITS). Split people/log into two keys if the limits ever grow.
 export class Board extends DurableObject {
   async fetch(request) {
     const url = new URL(request.url);

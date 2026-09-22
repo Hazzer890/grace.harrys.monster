@@ -40,5 +40,13 @@ On Harry's desktop the first nameserver in `/etc/resolv.conf` does not answer.
 Either fix the resolver or run:
 
 ```bash
-RES_OPTIONS="timeout:1 attempts:1" CLOUDFLARE_ACCOUNT_ID=816b6de463b497eebff6c1287c0950ed npx wrangler deploy
+RES_OPTIONS="timeout:1 attempts:1" CLOUDFLARE_ACCOUNT_ID=<account id from wrangler whoami> npx wrangler deploy
+```
+
+## Publish the repo
+
+The sibling sites are public repos under the same account.
+
+```bash
+gh repo create Hazzer890/grace.harrys.monster --public --source=. --push
 ```
