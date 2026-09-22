@@ -1,0 +1,10 @@
+{
+  "name": "grace",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-07-01",
+  "assets": { "directory": "./public" },
+  "durable_objects": { "bindings": [{ "name": "BOARD", "class_name": "Board" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Board"] }],
+  "routes": [{ "pattern": "grace.harrys.monster", "custom_domain": true }],
+  "observability": { "enabled": true }
+}
