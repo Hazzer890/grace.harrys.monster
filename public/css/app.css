@@ -1,0 +1,43 @@
+/* The shell's nav is sticky at top:18px and overlaps whatever sits directly
+   under it; every page using this shell gives .app its own top gutter. */
+.app { padding-block: clamp(24px, 5vw, 56px); }
+.intro { text-align: center; margin-bottom: 1.5rem; }
+.rule { color: var(--ink-soft); }
+
+.add { display: flex; flex-wrap: wrap; gap: .5rem; padding: 1rem; margin-bottom: 1rem; }
+.add[hidden] { display: none; }
+.add input { flex: 1 1 12rem; padding: .6rem .8rem; border: 1px solid var(--glass-brd); border-radius: 10px; background: var(--glass-fill-strong); font: inherit; color: var(--ink); }
+
+.board { list-style: none; padding: .5rem; margin: 0; }
+.row { display: grid; grid-template-columns: 3ch 1fr auto; align-items: center; gap: .75rem; padding: .7rem .9rem; border-radius: 12px; }
+.row + .row { border-top: 1px solid var(--glass-brd); }
+.row:first-child .rank { color: var(--accent); }
+.rank { font-family: var(--font-mono); font-weight: 600; text-align: right; }
+.rank::before { content: "#"; opacity: .5; }
+.name { font-weight: 600; font-size: 1.1rem; }
+.since { color: var(--ink-mute); font-size: .85rem; }
+.controls { display: none; gap: .25rem; grid-column: 1 / -1; justify-content: flex-end; }
+.editing .controls { display: flex; }
+.controls .btn { padding: .3rem .6rem; }
+.controls .btn:disabled { opacity: .3; }
+@media (min-width: 640px) { .row { grid-template-columns: 3ch 1fr auto auto; } .controls { grid-column: auto; } }
+
+.empty { text-align: center; color: var(--ink-mute); padding: 2rem; }
+.empty[hidden] { display: none; }
+
+.changes { margin-top: 2rem; }
+.changes h2 { font-size: 1rem; color: var(--ink-soft); margin-bottom: .5rem; }
+.changes ul { list-style: none; padding: 0; margin: 0; }
+.changes li { padding: .4rem 0; border-top: 1px solid var(--glass-brd); font-size: .95rem; }
+.changes q { color: var(--ink-soft); }
+.changes time { color: var(--ink-mute); font-size: .8rem; margin-left: .5rem; }
+
+dialog { border: 0; border-radius: var(--radius); padding: 1.5rem; max-width: 26rem; width: calc(100% - 2rem); color: var(--ink); }
+dialog::backdrop { background: rgba(17, 24, 50, .4); backdrop-filter: blur(4px); }
+dialog h2 { font-size: 1.1rem; margin-bottom: 1rem; }
+dialog textarea, dialog input[type=number] { width: 100%; padding: .6rem .8rem; border: 1px solid var(--glass-brd); border-radius: 10px; font: inherit; margin-bottom: 1rem; background: var(--glass-fill-strong); color: var(--ink); }
+.why-rank { display: block; margin-bottom: .5rem; }
+.why-rank[hidden] { display: none; }
+.why-actions { display: flex; justify-content: flex-end; gap: .5rem; }
+
+.toast { position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%); background: var(--ink); color: #fff; padding: .7rem 1rem; border-radius: 999px; font-size: .9rem; z-index: 10; }
