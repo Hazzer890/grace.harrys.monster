@@ -63,8 +63,8 @@ function render(state) {
 let toastTimer;
 function toast(msg) {
   const el = $("#toast");
-  el.textContent = msg;
   el.hidden = false;
+  el.textContent = msg;
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { el.hidden = true; }, 4000);
 }
@@ -74,7 +74,8 @@ async function send(op) {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
     body: JSON.stringify(op),
-  });
+  }).catch(() => null);
+  if (!r) return toast("Couldn't reach the server. Try again.");
   if (r.status === 401) {
     try { localStorage.removeItem("key"); } catch {}
     toast("That key doesn't work any more.");
@@ -99,7 +100,8 @@ function ask(title, op, maxRank = 0) {
   $("#why").showModal();
   (maxRank ? rank : $("#why-note")).focus();
 }
-$("#why-cancel").onclick = () => { pending = null; $("#why").close(); };
+$("#why").onclose = () => { pending = null; };
+$("#why-cancel").onclick = () => { $("#why").close(); };
 $("#why-form").onsubmit = () => {
   if (!pending) return;
   const op = { ...pending, note: $("#why-note").value };

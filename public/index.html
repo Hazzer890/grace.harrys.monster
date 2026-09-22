@@ -113,17 +113,17 @@ window.track=function(n,p){send({t:'custom',name:n,props:p})};
     </div>
 
     <form class="add glass" id="add-form" hidden>
-      <input id="add-name" name="name" placeholder="Name" maxlength="40" required autocomplete="off">
-      <input id="add-note" name="note" placeholder="Reason (optional)" maxlength="200" autocomplete="off">
+      <input id="add-name" name="name" aria-label="Name" placeholder="Name" maxlength="40" required autocomplete="off">
+      <input id="add-note" name="note" aria-label="Reason" placeholder="Reason (optional)" maxlength="200" autocomplete="off">
       <button type="submit" class="btn btn-primary">Add to the bottom</button>
     </form>
 
-    <ol class="board glass" id="board" aria-live="polite"></ol>
+    <ol class="board glass" id="board"></ol>
     <p class="empty" id="empty">Nobody yet.</p>
 
     <section class="changes">
       <h2>Recent changes</h2>
-      <ul id="log"></ul>
+      <ul id="log" aria-live="polite"></ul>
     </section>
   </main>
 
@@ -141,11 +141,11 @@ window.track=function(n,p){send({t:'custom',name:n,props:p})};
     </li>
   </template>
 
-  <dialog id="why" class="glass">
+  <dialog id="why" class="glass" aria-labelledby="why-title">
     <form method="dialog" id="why-form">
       <h2 id="why-title"></h2>
       <label class="why-rank" id="why-rank-wrap" hidden>New rank <input type="number" id="why-rank" min="1" step="1"></label>
-      <textarea id="why-note" maxlength="200" rows="3" placeholder="Reason (optional)"></textarea>
+      <textarea id="why-note" aria-label="Reason" maxlength="200" rows="3" placeholder="Reason (optional)"></textarea>
       <div class="why-actions">
         <button type="button" class="btn btn-ghost" id="why-cancel">Cancel</button>
         <button type="submit" class="btn btn-primary">Do it</button>
