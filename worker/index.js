@@ -22,7 +22,8 @@ export class Board extends DurableObject {
     if (url.pathname === "/op") {
       let next;
       try {
-        next = apply(await this.state(), await request.json());
+        const op = await request.json();
+        next = apply(await this.state(), op);
       } catch (e) {
         return Response.json({ error: e.message }, { status: 400 });
       }
@@ -40,7 +41,7 @@ export class Board extends DurableObject {
   }
 
   webSocketMessage() {} // clients never send; ignore
-  webSocketClose() {}
+  webSocketClose(ws, code) { try { ws.close(code, "closing"); } catch {} }
   webSocketError() {}
 }
 
@@ -64,7 +65,7 @@ export default {
     }
 
     if (url.pathname === "/api/op" && request.method === "POST") {
-      if (!(await authed(request, env))) return new Response("Unauthorized", { status: 401 });
+      if (!(await authed(request, env))) return Response.json({ error: "Unauthorized" }, { status: 401 });
       return board.fetch(new Request("https://board/op", request));
     }
 
