@@ -134,7 +134,8 @@ $("#why-form").onsubmit = () => {
 
 $("#add-form").onsubmit = (e) => {
   e.preventDefault();
-  send({ op: "add", name: $("#add-name").value, note: $("#add-note").value });
+  const to = $("#add-rank").value;
+  send({ op: "add", name: $("#add-name").value, note: $("#add-note").value, ...(to && { to: Number(to) }) });
   e.target.reset();
   $("#add-name").focus();
 };

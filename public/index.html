@@ -114,8 +114,9 @@ window.track=function(n,p){send({t:'custom',name:n,props:p})};
 
     <form class="add glass" id="add-form" hidden>
       <input id="add-name" name="name" aria-label="Name" placeholder="Name" maxlength="40" required autocomplete="off">
+      <input id="add-rank" name="to" type="number" aria-label="Rank" placeholder="Rank" min="1" step="1" autocomplete="off">
       <input id="add-note" name="note" aria-label="Reason" placeholder="Reason (optional)" maxlength="200" autocomplete="off">
-      <button type="submit" class="btn btn-primary">Add to the bottom</button>
+      <button type="submit" class="btn btn-primary">Add</button>
     </form>
 
     <form class="add glass" id="say-form" hidden>
