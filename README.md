@@ -6,6 +6,11 @@ carry a reason that shows in the feed under the board.
 
 ## How it works
 
+- The public page ranks the top 10 and floats everyone else as an unranked
+  name cloud; the feed says "the cloud" instead of a number past 10. Grace
+  sees every rank. The masking is client-side only: `/api/state` is public
+  and always carries the full board.
+
 - One Cloudflare Worker serves `public/` and proxies `/api/*` to a single
   `Board` Durable Object that holds the board as one JSON value and pushes it
   to every open WebSocket after each change (`worker/index.js`).

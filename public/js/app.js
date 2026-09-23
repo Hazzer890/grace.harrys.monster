@@ -11,19 +11,26 @@ $("#add-form").hidden = $("#say-form").hidden = !editing;
 const day = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short" });
 const when = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
 
+// The public page shows the top TOP ranks; everyone else is an unranked name
+// in the cloud, and the feed says "the cloud" instead of their number.
+const TOP = 10;
+const r = (n) => (editing || n <= TOP ? `#${n}` : "the cloud");
+
 function describe(e) {
   if (e.action === "announce") return "";
   const what =
-    e.action === "add" ? `joined at #${e.to}` :
-    e.action === "remove" ? `removed from #${e.from}` :
-    `moved #${e.from} → #${e.to}`;
+    e.action === "add" ? `joined ${e.to > TOP && !editing ? "" : "at "}${r(e.to)}` :
+    e.action === "remove" ? `removed from ${r(e.from)}` :
+    r(e.from) === r(e.to) && e.from !== e.to ? "moved within the cloud" :
+    `moved ${r(e.from)} → ${r(e.to)}`;
   return `${e.name} ${what}`;
 }
 
 function render(state) {
   const board = $("#board");
   board.replaceChildren();
-  state.people.forEach((p, i) => {
+  const shown = editing ? state.people : state.people.slice(0, TOP);
+  shown.forEach((p, i) => {
     const li = $("#row-tpl").content.firstElementChild.cloneNode(true);
     li.querySelector(".rank").textContent = i + 1;
     li.querySelector(".name").textContent = p.name;
@@ -40,6 +47,17 @@ function render(state) {
     board.append(li);
   });
   $("#empty").hidden = state.people.length > 0;
+
+  const cloud = $("#cloud");
+  cloud.replaceChildren();
+  const rest = editing ? [] : state.people.slice(TOP).map((p) => p.name).sort((a, b) => a.localeCompare(b));
+  rest.forEach((name, i) => {
+    const s = document.createElement("span");
+    s.textContent = name;
+    s.style.setProperty("--i", i % 7);
+    cloud.append(s);
+  });
+  cloud.hidden = rest.length === 0;
 
   const log = $("#log");
   log.replaceChildren();
