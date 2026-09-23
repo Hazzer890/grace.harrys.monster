@@ -43,6 +43,9 @@ export function apply(state, op, now = Date.now()) {
     const i = find(people, op.name);
     const [p] = people.splice(i, 1);
     entry = { action: "remove", name: p.name, from: i + 1 };
+  } else if (op?.op === "announce") {
+    if (!note) throw new Error("message required");
+    entry = { action: "announce" };
   } else {
     throw new Error("unknown op");
   }

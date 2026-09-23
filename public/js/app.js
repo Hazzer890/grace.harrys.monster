@@ -6,12 +6,13 @@ let key = null;
 try { key = localStorage.getItem("key"); } catch {}
 const editing = Boolean(key);
 document.body.classList.toggle("editing", editing);
-$("#add-form").hidden = !editing;
+$("#add-form").hidden = $("#say-form").hidden = !editing;
 
 const day = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short" });
 const when = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
 
 function describe(e) {
+  if (e.action === "announce") return "";
   const what =
     e.action === "add" ? `joined at #${e.to}` :
     e.action === "remove" ? `removed from #${e.from}` :
@@ -44,9 +45,12 @@ function render(state) {
   log.replaceChildren();
   for (const e of state.log.slice(0, 30)) {
     const li = document.createElement("li");
-    const b = document.createElement("b");
-    b.textContent = describe(e);
-    li.append(b);
+    li.className = e.action;
+    if (e.action !== "announce") {
+      const b = document.createElement("b");
+      b.textContent = describe(e);
+      li.append(b);
+    }
     if (e.note) {
       const q = document.createElement("q");
       q.textContent = e.note;
@@ -115,6 +119,12 @@ $("#add-form").onsubmit = (e) => {
   send({ op: "add", name: $("#add-name").value, note: $("#add-note").value });
   e.target.reset();
   $("#add-name").focus();
+};
+
+$("#say-form").onsubmit = (e) => {
+  e.preventDefault();
+  send({ op: "announce", note: $("#say-note").value });
+  e.target.reset();
 };
 
 function connect() {

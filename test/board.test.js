@@ -55,6 +55,13 @@ test("names and notes are clipped, log is capped, unknown op throws", () => {
   assert.throws(() => apply(empty(), null), /unknown/);
 });
 
+test("announce logs a note and leaves people alone", () => {
+  const s = apply(seed("A"), { op: "announce", note: " hello all " }, 3);
+  assert.deepEqual(names(s), ["A"]);
+  assert.deepEqual(s.log[0], { t: 3, action: "announce", note: "hello all" });
+  assert.throws(() => apply(empty(), { op: "announce", note: "  " }), /message/);
+});
+
 test("apply does not mutate its input", () => {
   const s = seed("A");
   apply(s, { op: "add", name: "B" });

@@ -30,6 +30,8 @@
 .changes ul { list-style: none; padding: 0; margin: 0; }
 .changes li { padding: .4rem 0; border-top: 1px solid var(--glass-brd); font-size: .95rem; }
 .changes q { color: var(--ink-soft); }
+.changes .announce { padding-left: .75rem; border-left: 3px solid var(--accent); }
+.changes .announce q { color: var(--ink); font-style: italic; }
 .changes time { color: var(--ink-mute); font-size: .8rem; margin-left: .5rem; }
 
 dialog { border: 0; border-radius: var(--radius); padding: 1.5rem; max-width: 26rem; width: calc(100% - 2rem); color: var(--ink); }

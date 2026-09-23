@@ -10,7 +10,8 @@ carry a reason that shows in the feed under the board.
   `Board` Durable Object that holds the board as one JSON value and pushes it
   to every open WebSocket after each change (`worker/index.js`).
 - `worker/board.js` is the reducer: add, move, remove, with limits and a
-  capped change log. It is the only tested code (`npm test`).
+  capped change log, plus `announce`, a bare message that goes in the log
+  without touching the board. It is the only tested code (`npm test`).
 - Editing needs the `EDIT_KEY` secret. Grace opens
   `https://grace.harrys.monster/#<key>` once; `public/js/key.js` runs before
   the analytics snippet, moves the key into localStorage and strips it from

@@ -118,6 +118,11 @@ window.track=function(n,p){send({t:'custom',name:n,props:p})};
       <button type="submit" class="btn btn-primary">Add to the bottom</button>
     </form>
 
+    <form class="add glass" id="say-form" hidden>
+      <input id="say-note" name="note" aria-label="Announcement" placeholder="Announcement" maxlength="200" required autocomplete="off">
+      <button type="submit" class="btn btn-primary">Post</button>
+    </form>
+
     <ol class="board glass" id="board"></ol>
     <p class="empty" id="empty" hidden>Nobody yet.</p>
 
