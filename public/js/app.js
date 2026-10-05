@@ -13,11 +13,26 @@ const when = new Intl.DateTimeFormat("en-AU", { day: "numeric", month: "short", 
 
 // The public page shows the top TOP ranks; everyone else is an unranked name
 // in the cloud, and the feed says "the cloud" instead of their number.
-const TOP = 10;
+const TOP = 10; // matches TOP in worker/board.js
 const r = (n) => (editing || n <= TOP ? `#${n}` : "the cloud");
+
+const RETIRE = [
+  (n) => `${n} has been retired to the cloud`,
+  (n) => `${n} drifts off into the cloud`,
+  (n) => `${n} has ascended to the cloud`,
+  (n) => `${n} is now one with the cloud`,
+  (n) => `${n} has been put out to pasture in the cloud`,
+  (n) => `${n} floats away to the cloud`,
+  (n) => `${n} has been uploaded to the cloud`,
+  (n) => `${n} is lost in the clouds`,
+  (n) => `${n} has gone to the big leaderboard in the sky`,
+  (n) => `${n} has been sent to live on a nice farm in the cloud`,
+];
 
 function describe(e) {
   if (e.action === "announce") return "";
+  // Seeded by the entry so the line doesn't change on every render.
+  if (e.action === "retire") return RETIRE[(e.t + e.name.length) % RETIRE.length](e.name);
   const what =
     e.action === "add" ? `joined ${e.to > TOP && !editing ? "" : "at "}${r(e.to)}` :
     e.action === "remove" ? `removed from ${r(e.from)}` :

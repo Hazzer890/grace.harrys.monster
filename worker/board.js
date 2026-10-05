@@ -1,6 +1,8 @@
 // Pure reducer for the board. The Durable Object is the only caller that
 // persists the result; the client only ever renders what the server sends.
 export const LIMITS = { name: 40, note: 200, people: 200, log: 200 };
+// Ranks shown publicly; must match TOP in public/js/app.js.
+export const TOP = 10;
 
 export const empty = () => ({ people: [], log: [], updated: 0 });
 
@@ -50,6 +52,11 @@ export function apply(state, op, now = Date.now()) {
     throw new Error("unknown op");
   }
 
-  const log = [{ t: now, ...entry, note }, ...state.log].slice(0, LIMITS.log);
+  // Anyone still on the board who fell out of the top TOP gets their own entry.
+  const top = new Set(people.slice(0, TOP));
+  const retired = state.people.slice(0, TOP).filter((p) => !top.has(p) && people.includes(p))
+    .map((p) => ({ t: now, action: "retire", name: p.name, note: "" }));
+
+  const log = [...retired, { t: now, ...entry, note }, ...state.log].slice(0, LIMITS.log);
   return { people, log, updated: now };
 }

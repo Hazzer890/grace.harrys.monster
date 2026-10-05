@@ -67,3 +67,16 @@ test("apply does not mutate its input", () => {
   apply(s, { op: "add", name: "B" });
   assert.deepEqual(names(s), ["A"]);
 });
+
+test("anyone pushed out of the top ten gets a retire entry", () => {
+  const ten = seed(..."ABCDEFGHIJKL");
+  const s = apply(ten, { op: "move", name: "L", to: 1 }, 4);
+  assert.deepEqual(s.log.slice(0, 2), [
+    { t: 4, action: "retire", name: "J", note: "" },
+    { t: 4, action: "move", name: "L", from: 12, to: 1, note: "" },
+  ]);
+  assert.equal(apply(ten, { op: "add", name: "X", to: 3 }, 4).log[0].name, "J");
+  assert.equal(apply(ten, { op: "move", name: "A", to: 12 }, 4).log[0].name, "A");
+  assert.equal(apply(ten, { op: "remove", name: "A" }, 4).log[0].action, "remove");
+  assert.equal(apply(ten, { op: "add", name: "X" }, 4).log[0].action, "add");
+});

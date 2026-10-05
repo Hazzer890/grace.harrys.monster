@@ -8,7 +8,8 @@ carry a reason that shows in the feed under the board.
 
 - The public page ranks the top 10 and floats everyone else as an unranked
   name cloud; the feed says "the cloud" instead of a number past 10. Grace
-  sees every rank. The masking is client-side only: `/api/state` is public
+  sees every rank. Anyone knocked out of the top 10 gets their own feed line,
+  picked from ten "retired to the cloud" variants. The masking is client-side only: `/api/state` is public
   and always carries the full board.
 
 - One Cloudflare Worker serves `public/` and proxies `/api/*` to a single
