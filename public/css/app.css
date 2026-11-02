@@ -1,6 +1,5 @@
 /* The shell's nav is sticky at top:18px and overlaps whatever sits directly
    under it; every page using this shell gives .app its own top gutter. */
-.app { padding-block: clamp(24px, 5vw, 56px); }
 .intro { text-align: center; margin-bottom: 1.5rem; }
 .rule { color: var(--ink-soft); }
 
